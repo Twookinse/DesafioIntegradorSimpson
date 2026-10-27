@@ -1,5 +1,13 @@
 # Desafío Grupal de Métodos Numéricos: Integración Numérica (La Paz, Bolivia)
 
+**Integrantes del Equipo:**
+* **Carlos Alexander Ilaluque Huanca**
+* **Oscar Felipe Valencia Sanchez**
+* **Hernan Yazid Perez Ovando**
+
+* 🌐 **Aplicación Web desplegada (GitHub Pages):** [https://twookinse.github.io/DesafioIntegradorSimpson/](https://twookinse.github.io/DesafioIntegradorSimpson/)
+* 📄 **Informe Técnico Completo:** [INFORME_PROBLEMAS_RESUELTOS.md](INFORME_PROBLEMAS_RESUELTOS.md)
+
 Este repositorio contiene la **Aplicación Web Interactiva** (`index.html`, `styles.css`, `app.js`) y el **Informe Técnico de Problemas Resueltos** (`INFORME_PROBLEMAS_RESUELTOS.md`) siguiendo todas las pautas de `Desafio_Integracion_Numerica_La_Paz_Solucionario.docx` y resolviendo la totalidad de los ejercicios de `Ejercicios.pdf` (**Ejercicios 19 al 27** + **Adaptación Lago Titicaca** + **Prueba de Validación $f(x)=x^2$**).
 
 ---
@@ -32,3 +40,10 @@ Este repositorio contiene la **Aplicación Web Interactiva** (`index.html`, `sty
    * Validar automáticamente el espaciamiento uniforme $h = (b-a)/n$, orden creciente de $x$ y condiciones sobre $n$ para **Trapecio Compuesto**, **Simpson 1/3**, **Simpson 3/8** y **Simpson Combinado**.
    * Visualizar la **tabla de nodos y pesos de integración ($w_i$)**, la **comparación $n=4$ vs. $n=8$**, y la **gráfica del área bajo la curva**.
 2. **[`INFORME_PROBLEMAS_RESUELTOS.md`](INFORME_PROBLEMAS_RESUELTOS.md)**: Informe técnico detallado con la tabla general al inicio y el desarrollo paso a paso de los ejercicios 19 al 27.
+
+---
+
+## Evidencia del Equipo de Trabajo
+
+![Evidencia del Equipo en Laboratorio](Imagen.jpeg)
+

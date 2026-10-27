@@ -1,5 +1,6 @@
 # Informe Técnico: Problemas Resueltos de Integración Numérica (La Paz, Bolivia)
 
+> **Integrantes:** Carlos Alexander Ilaluque Huanca · Oscar Felipe Valencia Sanchez · Hernan Yazid Perez Ovando  
 > **Asignatura:** Métodos Numéricos — Integración Numérica Aplicada  
 > **Métodos implementados:** Trapecio Compuesto, Simpson 1/3 Compuesto, Simpson 3/8 Compuesto y Simpson Combinado  
 > **Ejercicios resueltos:** Ejercicios 19 al 27 (`Ejercicios.pdf`) + Adaptación Lago Titicaca + Verificación obligatoria $f(x)=x^2$ (`Desafio_Integracion_Numerica_La_Paz_Solucionario.docx`)
@@ -222,3 +223,13 @@ De acuerdo con los criterios de evaluación del solucionario (*"Incorporar compa
   * **Trapecio Compuesto:** $S_T = \mathbf{159.278748\text{ in}^2}$.
   * **Simpson 1/3 Compuesto:** $S_S = \mathbf{162.315620\text{ in}^2}$.
   * **Discusión Crítica:** La expresión $S = 2\pi\int_{0}^{L} r\,dz$ omite el diferencial de longitud de arco $\sqrt{1 + (r')^2}\,dz$. El área superficial verdadera de un sólido de revolución requiere $S_{\text{real}} = 2\pi\int_{0}^{L} r\sqrt{1 + (r')^2}\,dz$ (que al estimar $r'(z)$ por diferencias finitas asciende a $\approx 179.58\text{ in}^2$). Por tanto, la fórmula simplificada subestima el área real en un $\sim 9.6\%$.
+
+---
+
+## 4. Enlaces y Evidencia del Equipo
+
+* **Aplicación Web (GitHub Pages):** [https://twookinse.github.io/DesafioIntegradorSimpson/](https://twookinse.github.io/DesafioIntegradorSimpson/)
+* **Repositorio GitHub:** [https://github.com/Twookinse/DesafioIntegradorSimpson](https://github.com/Twookinse/DesafioIntegradorSimpson)
+
+![Evidencia del Equipo en Laboratorio](Imagen.jpeg)
+
