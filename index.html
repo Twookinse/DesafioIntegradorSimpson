@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Desafío Integración Numérica · La Paz, Bolivia (Ejercicios 19 al 27)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <!-- ENCABEZADO PRINCIPAL -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="header-title">
+        <h1>Integración Numérica Aplicada a Problemas de La Paz, Bolivia</h1>
+        <p>Aplicación Interactiva, Explicación de Problemas, Solucionario Completo (Ejercicios 19 al 27) e Informe
+          Técnico</p>
+      </div>
+      <div class="header-badges">
+        <span class="badge">Trapecio Compuesto</span>
+        <span class="badge">Simpson 1/3</span>
+        <span class="badge">Simpson 3/8</span>
+        <span class="badge">Simpson Combinado</span>
+        <span class="badge">Validación f(x)=x²</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- NAVEGACIÓN DE PESTAÑAS -->
+  <nav class="top-nav">
+    <div class="nav-container">
+      <div class="nav-tabs">
+        <button type="button" class="tab-btn active" data-tab="tab-calculator">
+          1. Calculadora Interactiva y Explicación del Problema
+        </button>
+        <button type="button" class="tab-btn" data-tab="tab-master-table">
+          2. Tabla General de Problemas Resueltos (Ej. 19–27)
+        </button>
+        <button type="button" class="tab-btn" data-tab="tab-manual">
+          3. Desarrollo Manual Paso a Paso
+        </button>
+        <button type="button" class="tab-btn" data-tab="tab-report">
+          4. Informe Técnico (2 Páginas / Imprimible)
+        </button>
+      </div>
+      <div class="no-print">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="window.print()">
+          🖨 Imprimir / Guardar PDF
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- CONTENEDOR PRINCIPAL -->
+  <main class="main-container">
+
+    <!-- ================================================================== -->
+    <!-- PESTAÑA 1: CALCULADORA INTERACTIVA Y EXPLICACIÓN DEL PROBLEMA      -->
+    <!-- ================================================================== -->
+    <section id="tab-calculator" class="tab-panel active">
+
+      <!-- Barra selectora de Ejercicios (19 al 27 + Grupos A..F) -->
+      <div class="selector-card">
+        <div class="selector-top">
+          <div class="selector-label">
+            <span>Seleccione el Ejercicio del PDF (Ejercicios 19 al 27) o filtre por Grupo Asignado:</span>
+          </div>
+          <div class="group-pills">
+            <button type="button" class="group-pill active" data-group="ALL">Todos (19–27)</button>
+            <button type="button" class="group-pill" data-group="A">Grupo A (19 y 23)</button>
+            <button type="button" class="group-pill" data-group="B">Grupo B (20 y 25)</button>
+            <button type="button" class="group-pill" data-group="C">Grupo C (21 y 24)</button>
+            <button type="button" class="group-pill" data-group="D">Grupo D (19 y 22)</button>
+            <button type="button" class="group-pill" data-group="E">Grupo E (20 y 27)</button>
+            <button type="button" class="group-pill" data-group="F">Grupo F (23 y 26)</button>
+          </div>
+        </div>
+        <div id="exerciseButtonsContainer" class="exercise-buttons"></div>
+      </div>
+
+      <!-- Grid Principal: Izquierda (Explicación + Ingreso de Datos), Derecha (Resultados + Tabla + Gráfica) -->
+      <div class="workspace-grid">
+
+        <!-- COLUMNA IZQUIERDA: EXPLICACIÓN DEL PROBLEMA E INGRESO DE DATOS -->
+        <div>
+          <!-- Tarjeta de Explicación del Problema -->
+          <div class="card">
+            <div class="card-header">
+              <h2 id="probTitle" class="card-title">Título del Ejercicio</h2>
+              <span id="probDifficultyTag" class="tag tag-blue">Intermedio</span>
+            </div>
+
+            <div class="explanation-box">
+              <div class="exp-block">
+                <h4>Enunciado Original (Ejercicios.pdf)</h4>
+                <p id="probOriginal"></p>
+              </div>
+
+              <div class="exp-block context-lapaz">
+                <h4>Interpretación y Contexto Adaptado (La Paz, Bolivia)</h4>
+                <p id="probLaPaz"></p>
+              </div>
+
+              <div class="exp-block model-block">
+                <h4>Modelo Matemático, Integral y Condiciones de Aplicabilidad</h4>
+                <div id="probFormula" class="formula-banner"></div>
+                <p id="probRefNote" style="margin-top:0.55rem; font-size:0.86rem;"></p>
+              </div>
+
+              <div class="exp-block" style="border-left-color: var(--success); background: var(--success-bg);">
+                <h4>Interpretación Física y Conclusión del Problema</h4>
+                <p id="probConclusion"></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tarjeta de Ingreso y Edición de Datos -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Ingreso y Edición de Datos</h3>
+              <button type="button" id="btnResetEx" class="btn btn-secondary btn-sm">
+                ↺ Restaurar datos originales del ejercicio
+              </button>
+            </div>
+
+            <!-- Selector de modo: Tabla (x,y) vs Función f(x) -->
+            <div class="mode-switch">
+              <button type="button" id="btnModeTable" class="mode-btn active">
+                📊 Modo Datos Tabulados (x, y)
+              </button>
+              <button type="button" id="btnModeFunc" class="mode-btn">
+                ƒ(x) Modo Función Matemática (f(x), a, b, n)
+              </button>
+            </div>
+
+            <!-- Parámetros comunes: Unidades, Factor de Escala, Transformación, Valor Exacto -->
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="inputUnit">Unidades del Resultado</label>
+                <input type="text" id="inputUnit" class="form-control" value="mi" placeholder="Ej: mi, lb·in, ft, J" />
+              </div>
+              <div class="form-group">
+                <label for="inputScale">Factor de Conversión (k)</label>
+                <input type="number" step="any" id="inputScale" class="form-control mono" value="1"
+                  title="Multiplica la integral por este factor (ej. 0.000277778 para 1/3600)" />
+              </div>
+              <div class="form-group">
+                <label for="inputTransform">Transformación de y</label>
+                <select id="inputTransform" class="form-control">
+                  <option value="none">Directa: f(x) = y</option>
+                  <option value="pi_r2">Volumen revolución: π·(d/2)² (Ej. 27)</option>
+                  <option value="2pi_r">Superficie simplificada: 2π·(d/2) (Ej. 27)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="inputExact">Valor Exacto / Referencia (I_ref)</label>
+                <input type="number" step="any" id="inputExact" class="form-control mono"
+                  placeholder="Opcional (para error %)" />
+              </div>
+            </div>
+
+            <!-- PANEL MODO TABLA (x, y) -->
+            <div id="panelTableMode">
+              <p style="font-size:0.83rem; color:var(--text-muted); margin-bottom:0.5rem;">
+                Edite directamente cualquier celda de la tabla, agregue o elimine nodos, o pegue datos separados por
+                coma a continuación:
+              </p>
+              <div class="points-table-wrapper">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th style="width:50px;">Nodo i</th>
+                      <th id="thXLabel">x</th>
+                      <th id="thYLabel">y</th>
+                      <th style="width:65px; text-align:center;">Acción</th>
+                    </tr>
+                  </thead>
+                  <tbody id="editablePointsBody"></tbody>
+                </table>
+              </div>
+              <div class="btn-row" style="margin-bottom:0.9rem;">
+                <button type="button" id="btnAddRow" class="btn btn-primary btn-sm">
+                  + Agregar fila (nodo)
+                </button>
+              </div>
+
+              <div class="form-group full-width">
+                <label for="csvPairsInput">Ingreso rápido por texto (parejas <code>x, y</code> por línea):</label>
+                <textarea id="csvPairsInput" class="form-control mono"
+                  placeholder="0, 0&#10;1, 14&#10;2, 39"></textarea>
+                <div class="btn-row">
+                  <button type="button" id="btnApplyCSV" class="btn btn-secondary btn-sm">
+                    ✓ Aplicar texto a la tabla y calcular
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- PANEL MODO FUNCIÓN f(x) -->
+            <div id="panelFuncMode" style="display:none;">
+              <div class="form-grid">
+                <div class="form-group full-width">
+                  <label for="inputFuncExpr">Función integrando f(x) (soporta sin, cos, sinh, cosh, sqrt, pow, pi,
+                    ^):</label>
+                  <input type="text" id="inputFuncExpr" class="form-control mono" value="cosh(x / 24)" />
+                </div>
+                <div class="form-group">
+                  <label for="inputA">Límite inferior (a)</label>
+                  <input type="number" step="any" id="inputA" class="form-control mono" value="-12" />
+                </div>
+                <div class="form-group">
+                  <label for="inputB">Límite superior (b)</label>
+                  <input type="number" step="any" id="inputB" class="form-control mono" value="26" />
+                </div>
+                <div class="form-group">
+                  <label for="inputN">Subintervalos (n)</label>
+                  <input type="number" step="1" min="1" max="1000" id="inputN" class="form-control mono" value="8" />
+                </div>
+              </div>
+              <div class="btn-row">
+                <span style="font-size:0.8rem; color:var(--text-muted); font-weight:600;">Prueba rápida de n:</span>
+                <button type="button" class="btn btn-secondary btn-sm btn-quick-n" data-n="4">n = 4 (S 1/3)</button>
+                <button type="button" class="btn btn-secondary btn-sm btn-quick-n" data-n="6">n = 6 (S 1/3 y
+                  3/8)</button>
+                <button type="button" class="btn btn-secondary btn-sm btn-quick-n" data-n="8">n = 8 (Estándar
+                  Guía)</button>
+                <button type="button" class="btn btn-secondary btn-sm btn-quick-n" data-n="9">n = 9 (S 3/8)</button>
+                <button type="button" class="btn btn-secondary btn-sm btn-quick-n" data-n="12">n = 12 (Ambos)</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COLUMNA DERECHA: VALIDACIÓN, RESULTADOS, GRÁFICA Y TABLA DE PESOS -->
+        <div>
+          <!-- Alerta de Validación de n y h -->
+          <div id="validationAlertBox" class="alert alert-success"></div>
+
+          <!-- Tarjetas KPI de Resultados -->
+          <div class="results-kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-label">Trapecio Compuesto</div>
+              <div id="kpiTrapVal" class="kpi-value">—</div>
+              <div id="kpiTrapSub" class="kpi-sub">—</div>
+            </div>
+            <div class="kpi-card highlight">
+              <div id="kpiSimpLabel" class="kpi-label">Simpson</div>
+              <div id="kpiSimpVal" class="kpi-value">—</div>
+              <div id="kpiSimpSub" class="kpi-sub">—</div>
+            </div>
+            <div class="kpi-card exact">
+              <div class="kpi-label">Valor Exacto / Referencia</div>
+              <div id="kpiExactVal" class="kpi-value">—</div>
+              <div id="kpiExactSub" class="kpi-sub">—</div>
+            </div>
+          </div>
+
+          <!-- Gráfico del Área bajo la Curva -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Gráfica de Datos y Área Integrada Bajo la Curva</h3>
+              <span class="tag tag-teal">Visualización de Subintervalos</span>
+            </div>
+            <div class="canvas-container">
+              <canvas id="integralChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Tabla Comparativa de Métodos y Errores -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Comparación de Métodos y Análisis de Error</h3>
+              <span class="tag tag-blue">Mínimo 6 decimales</span>
+            </div>
+            <div class="master-table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Método de Integración</th>
+                    <th>Condición sobre n</th>
+                    <th class="num-col">Resultado Numérico</th>
+                    <th class="num-col">Error Absoluto (Eₐ)</th>
+                    <th class="num-col">Error Porcentual (E%)</th>
+                  </tr>
+                </thead>
+                <tbody id="methodsComparisonBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Comparación n=4 vs n=8 (visible en modo función) -->
+          <div id="n4n8Card" class="card" style="display:none;">
+            <div class="card-header">
+              <h3 class="card-title">Comparación de Convergencia: n = 4 vs. n = 8 (Requisito de Evaluación)</h3>
+              <span class="tag tag-teal">Análisis de Refinamiento</span>
+            </div>
+            <div class="master-table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Subintervalos</th>
+                    <th class="num-col">Trapecio Compuesto</th>
+                    <th class="num-col">Error % Trapecio</th>
+                    <th class="num-col">Simpson 1/3</th>
+                    <th class="num-col">Error % Simpson 1/3</th>
+                  </tr>
+                </thead>
+                <tbody id="n4n8TableBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Sustitución en las Fórmulas Permitidas -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Sustitución en el Formulario Oficial</h3>
+              <span class="tag tag-blue">Verificación Manual</span>
+            </div>
+            <div class="manual-steps">
+              <pre id="liveManualSubstitution"></pre>
+            </div>
+          </div>
+
+          <!-- Tabla de Nodos, Factores y Pesos de Integración -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Tabla de Nodos y Factores / Pesos de Integración (wᵢ)</h3>
+              <span class="tag tag-teal">Detalle Nodo a Nodo</span>
+            </div>
+            <div class="points-table-wrapper" style="max-height:320px;">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th class="num-col">i</th>
+                    <th class="num-col">xᵢ</th>
+                    <th class="num-col">Dato yᵢ</th>
+                    <th class="num-col">Integrando f(xᵢ)</th>
+                    <th class="num-col">Peso Trap.</th>
+                    <th class="num-col">wᵢ·f(xᵢ) Trap.</th>
+                    <th class="num-col">Peso S 1/3</th>
+                    <th class="num-col">Peso S 3/8</th>
+                  </tr>
+                </thead>
+                <tbody id="weightsTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- PESTAÑA 2: TABLA GENERAL DE TODOS LOS PROBLEMAS RESUELTOS          -->
+    <!-- ================================================================== -->
+    <section id="tab-master-table" class="tab-panel">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">Matriz General de Problemas Resueltos (Ejercicios 19 al 27 + Validación)</h2>
+            <p style="font-size:0.86rem; color:var(--text-muted); margin-top:0.2rem;">
+              Resumen comparativo completo con modelos matemáticos, paso h, resultados por Trapecio Compuesto, Simpson
+              (1/3, 3/8 o Combinado), valores exactos de referencia y errores porcentuales.
+            </p>
+          </div>
+          <span class="tag tag-blue">Todos los Grupos (A–F)</span>
+        </div>
+
+        <div class="master-table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Ejercicio / Problema</th>
+                <th>Modelo Integral</th>
+                <th class="num-col">n y paso h</th>
+                <th class="num-col">Trapecio Compuesto</th>
+                <th class="num-col">Simpson (1/3, 3/8 o Comb.)</th>
+                <th class="num-col">Valor Exacto / Ref.</th>
+                <th class="num-col">E% Trap.</th>
+                <th class="num-col">E% Simp.</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody id="masterSummaryTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Tabla Comparativa n = 4 vs. n = 8 en Ejercicios con Función Analítica (Ej. 22, 23, 24,
+            25 y Validación)</h3>
+          <span class="tag tag-teal">Orden de Convergencia</span>
+        </div>
+        <div class="master-table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Ejercicio</th>
+                <th class="num-col">Valor Exacto</th>
+                <th class="num-col">Trapecio (n = 4)</th>
+                <th class="num-col">Trapecio (n = 8)</th>
+                <th class="num-col">Simpson 1/3 (n = 4)</th>
+                <th class="num-col">Simpson 1/3 (n = 8)</th>
+              </tr>
+            </thead>
+            <tbody id="masterConvergenceBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- PESTAÑA 3: DESARROLLO MANUAL PASO A PASO DE TODOS LOS EJERCICIOS   -->
+    <!-- ================================================================== -->
+    <section id="tab-manual" class="tab-panel">
+      <div class="card" style="background: var(--primary-light); border-color: #93c5fd;">
+        <h2 class="card-title" style="color: var(--primary);">Formulario Oficial Aplicado en el Desarrollo Manual</h2>
+        <p style="font-size:0.9rem; margin-top:0.35rem;">
+          • <strong>Paso uniforme:</strong> <code>h = (b − a) / n</code> &nbsp;|&nbsp;
+          • <strong>Trapecio compuesto:</strong> <code>T = h · [ (f₀ + fₙ)/2 + Σᵢ₌₁ⁿ⁻¹ fᵢ ]</code> &nbsp;|&nbsp;
+          • <strong>Simpson 1/3 (n par):</strong>
+          <code>S₁/₃ = (h/3) · [ f₀ + fₙ + 4·Σ f_impar + 2·Σ f_par_interior ]</code> &nbsp;|&nbsp;
+          • <strong>Simpson 3/8 (n múltiplo de 3):</strong>
+          <code>S₃/₈ = (3h/8) · [ f₀ + fₙ + 3·Σ f_(no_múltiplo_3) + 2·Σ f_(múltiplo_3_interior) ]</code>
+        </p>
+      </div>
+      <div id="allManualDevelopmentsContainer"></div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- PESTAÑA 4: INFORME TÉCNICO ESTRUCTURADO (MÁX. 2 PÁGINAS IMPRIMIBLE)-->
+    <!-- ================================================================== -->
+    <section id="tab-report" class="tab-panel">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">INFORME TÉCNICO: INTEGRACIÓN NUMÉRICA APLICADA (LA PAZ, BOLIVIA)</h2>
+            <h2 class="card-header">Nombres: Carlos Alexander ilaluque Huanca</h2>
+            <h2 class="card-header">Oscar Felipe Valencia Sanchez</h2>
+            <h2 class="card-header">Hernan Yazid Perez Ovando</h2>
+            <p style="font-size:0.86rem; color:var(--text-muted);">
+              Documento síntesis siguiendo la plantilla oficial de 6 secciones (Problema, Modelo, Datos, Cálculo,
+              Resultados y Conclusión) y tabla maestra inicial.
+            </p>
+          </div>
+          <button type="button" class="btn btn-primary btn-sm no-print" onclick="window.print()">
+            🖨 Imprimir Informe / Exportar PDF
+          </button>
+        </div>
+
+        <div class="report-section">
+          <h3 style="margin-bottom:0.5rem; color:var(--primary);">1. Tabla Resumen General de Problemas Resueltos
+            (Ejercicios 19 al 27)</h3>
+          <div class="master-table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Ejercicio</th>
+                  <th>Modelo Integral</th>
+                  <th class="num-col">n y paso h</th>
+                  <th class="num-col">Trapecio Compuesto</th>
+                  <th class="num-col">Simpson (1/3, 3/8 o Comb.)</th>
+                  <th class="num-col">Valor Exacto / Ref.</th>
+                  <th class="num-col">E% Trap.</th>
+                  <th class="num-col">E% Simp.</th>
+                </tr>
+              </thead>
+              <tbody id="reportMasterTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="report-section">
+          <h3 style="margin-bottom:0.5rem; color:var(--primary);">2. Planteamiento, Modelos y Procedimiento de Cálculo
+          </h3>
+          <p style="font-size:0.9rem; margin-bottom:0.6rem;">
+            Se resolvieron los nueve problemas de aplicación (Ejercicios 19 al 27 de <em>Ejercicios.pdf</em>) adaptados
+            a escenarios de transporte urbano, ensayo de materiales, topografía, cables suspendidos, hidráulica de
+            tuberías, trayectorias geométricas, energía aeroespacial y limnología en La Paz, Bolivia:
+          </p>
+          <ul style="font-size:0.88rem; padding-left:1.3rem; display:flex; flex-direction:column; gap:0.4rem;">
+            <li><strong>Problemas con n = 7 subintervalos (Ej. 19 Transporte y Ej. 20 Elasticidad):</strong> Como n = 7
+              es impar y no es múltiplo de 3, las reglas simples de Simpson no cubren todo el dominio por sí solas. Se
+              aplicó el <strong>Método del Trapecio Compuesto</strong> en los 7 intervalos y el <strong>Método de
+                Simpson Combinado</strong>: Simpson 1/3 sobre los primeros 4 subintervalos más Simpson 3/8 sobre los
+              últimos 3 subintervalos. En el Ej. 19 se dividió entre 3600 s/h para obtener
+              <code>d_T = 0.147083 mi</code> y <code>d_S = 0.147072 mi (236.69 m)</code>. En el Ej. 20 se obtuvo
+              <code>W_T = 4.544000 lb·in</code> y <code>W_S = 4.577167 lb·in (0.5172 J)</code>.
+            </li>
+            <li><strong>Problemas con curvas o mapas digitalizados (Ej. 21 Perfil Topográfico y Ej. 26 Lago Erie /
+                Titicaca):</strong> En el Ej. 21 (x ∈ [1,10], n = 9) se obtuvo <code>36.400000 u²</code> por Trapecio,
+              <code>36.850000 u²</code> combinando Simpson 1/3 (8 int.) + Trapecio (9no int.), y
+              <code>36.600000 u²</code> con Simpson 3/8 puro. En el Ej. 26 (Lago Erie, x ∈ [40,260] mi cada 20 mi, n =
+              11), la tabla digitalizada produce <code>9,860.00 mi²</code> por Trapecio (E% = 0.80%) y
+              <code>9,925.83 mi²</code> por Simpson Combinado (E% = 0.14%) frente a los <code>9,940 mi²</code> reales.
+            </li>
+            <li><strong>Problemas con función analítica continua (Ej. 22 Catenaria, Ej. 23 Tubería, Ej. 24 Cardioide y
+                Ej. 25 Satélite):</strong> Evaluados con n = 4 y n = 8 subintervalos. En funciones suaves (Ej. 22, 24 y
+              25), Simpson 1/3 con n = 8 alcanza errores porcentuales inferiores al 0.015% (ej.
+              <code>43.899213 ft</code> vs exacto <code>43.898841 ft</code> en la catenaria; <code>80.010767</code> vs
+              <code>80</code> en la cardioide; <code>3.48623690×10⁹ J</code> vs <code>3.48623679×10⁹ J</code> en el
+              satélite). En cambio, en el Ej. 23 (perfil turbulento <code>(1 - r/R)^(1/7)</code>), la pendiente infinita
+              en la pared <code>r → R</code> limita la precisión a <code>11.681778 in³/s</code> (Trapecio) y
+              <code>12.151244 in³/s</code> (Simpson 1/3) frente al valor exacto <code>49π/12 ≈ 12.828170 in³/s</code>.
+            </li>
+            <li><strong>Geometría de sólidos de revolución (Ej. 27 Balón, n = 12):</strong> Con 13 mediciones de
+              diámetro (h = 1 in), el volumen integrado es <code>V_T = 199.404740 in³</code> y
+              <code>V_S = 201.842092 in³</code>. Para la superficie, la fórmula simplificada <code>S = 2π∫r dz</code>
+              arroja <code>159.278748 in²</code> (Trapecio) y <code>162.315620 in²</code> (Simpson 1/3), demostrándose
+              que omite el factor de inclinación <code>√(1 + (r')²)</code> propio del área real de revolución.
+            </li>
+          </ul>
+        </div>
+
+        <div class="report-section">
+          <h3 style="margin-bottom:0.5rem; color:var(--primary);">3. Conclusiones Generales y Verificación del Software
+          </h3>
+          <p style="font-size:0.9rem;">
+            1) La prueba obligatoria de verificación con <code>f(x) = x²</code> en <code>[0, 2]</code> entrega
+            exactamente <code>2.666667 (8/3)</code> mediante Simpson 1/3 tanto en n = 4 como en n = 8 (error 0.0000%),
+            validando la exactitud del código implementado.<br>
+            2) Simpson 1/3 supera sistemáticamente al método del Trapecio Compuesto cuando el integrando tiene derivadas
+            continuas y acotadas (orden de convergencia O(h⁴) frente a O(h²)), pero requiere paso uniforme y cuidado
+            especial ante singularidades de derivada en los extremos (como ocurre en el flujo turbulento del Ejercicio
+            23).
+          </p>
+          <img src="Imagen.jpeg" alt="nosotrosxd" srcset="">
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
